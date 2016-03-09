@@ -3,3 +3,8 @@
 
 # Executables
 *.exe
+/Codingame.Ascii.Art/Codingame.Ascii.Art/bin/Debug
+/Codingame.Ascii.Art/Codingame.Ascii.Art/obj/Debug
+/Codingame.Ascii.Art/Codingame.Ascii.Art.Test/obj/Debug
+*.suo
+*.pdb
