@@ -65,15 +65,23 @@
         private class AsciiArtAlphabet
         {
             private readonly IEnumerable<AsciiArtCaracter> _caractersAsciis;
+            private readonly AsciiArtCaracter _questionMarkAsciiArt;
 
             public AsciiArtAlphabet(IEnumerable<AsciiArtCaracter> caractersAsciis)
             {
                 _caractersAsciis = caractersAsciis;
+                _questionMarkAsciiArt = Translate(QuestionMark);
             }
 
             public AsciiArtCaracter Translate(string caracter)
             {
-                return _caractersAsciis.FirstOrDefault(ca => ca.Is(caracter));
+                var translation = _caractersAsciis.FirstOrDefault(ca => ca.Is(caracter));
+                if (translation != null)
+                {
+                    return translation;
+                }
+
+                return _questionMarkAsciiArt;
             }
 
             public static AsciiArtAlphabet Init(int width, int height, string text, string[] asciiArtAlphabet)

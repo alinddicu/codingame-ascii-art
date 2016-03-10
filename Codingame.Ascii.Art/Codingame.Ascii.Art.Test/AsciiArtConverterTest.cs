@@ -47,5 +47,24 @@
 
             Check.That(asciiArtTranslation).IsEqualTo(expectedTranslation);
         }
+
+        [TestMethod]
+        public void GivenUnknownWhenExecuteThenReturnBQuestionMarksAsciiArt()
+        {
+            var width = 4;
+            var height = 5;
+            var text = "!";
+
+            var asciiArtTranslation = _converter.Execute(width, height, text, AsciiArtAlphabet);
+
+            var expectedTranslation =
+                "### " + Environment.NewLine +
+                "  # " + Environment.NewLine +
+                " ## " + Environment.NewLine +
+                "    " + Environment.NewLine +
+                " #  " + Environment.NewLine;
+
+            Check.That(asciiArtTranslation).IsEqualTo(expectedTranslation);
+        }
     }
 }
