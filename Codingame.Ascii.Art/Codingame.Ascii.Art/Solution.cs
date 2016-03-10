@@ -27,7 +27,7 @@
                 ROWS[i] = Console.ReadLine();
             }
 
-            var result = new AsciiArtParser().Execute(L, H, T, ROWS);
+            var result = new AsciiArtConverter().Execute(L, H, T, ROWS);
 
             // Write an action using Console.WriteLine()
             // To debug: Console.Error.WriteLine("Debug messages...");
@@ -35,13 +35,13 @@
             Console.WriteLine(result);
         }
 
-        public class AsciiArtParser
+        public class AsciiArtConverter
         {
             public string Execute(int width, int height, string text, string[] asciiArtAlphabet)
             {
-                var asciiAlphabet = AsciiAlphabet.Init(width, height, text, asciiArtAlphabet);
+                var asciiAlphabet = AsciiArtAlphabet.Init(width, height, text, asciiArtAlphabet);
 
-                var textOfAsciiCaracters = new List<CaracterAsciiArt>();
+                var textOfAsciiCaracters = new List<AsciiArtCaracter>();
                 foreach (var caracter in text)
                 {
                     textOfAsciiCaracters.Add(asciiAlphabet.Translate(caracter.ToString()));
@@ -52,7 +52,7 @@
                 {
                     foreach (var textOfAsciiCaracter in textOfAsciiCaracters)
                     {
-                        output += textOfAsciiCaracter.GetLine(heightIndex);
+                        output += textOfAsciiCaracter.GetAsciiArtLine(heightIndex);
                     }
 
                     output += Environment.NewLine;
@@ -62,23 +62,23 @@
             }
         }
 
-        public class AsciiAlphabet
+        private class AsciiArtAlphabet
         {
-            private readonly IEnumerable<CaracterAsciiArt> _caractersAsciis;
+            private readonly IEnumerable<AsciiArtCaracter> _caractersAsciis;
 
-            public AsciiAlphabet(IEnumerable<CaracterAsciiArt> caractersAsciis)
+            public AsciiArtAlphabet(IEnumerable<AsciiArtCaracter> caractersAsciis)
             {
                 _caractersAsciis = caractersAsciis;
             }
 
-            public CaracterAsciiArt Translate(string caracter)
+            public AsciiArtCaracter Translate(string caracter)
             {
                 return _caractersAsciis.FirstOrDefault(ca => ca.Is(caracter));
             }
 
-            public static AsciiAlphabet Init(int width, int height, string text, string[] asciiArtAlphabet)
+            public static AsciiArtAlphabet Init(int width, int height, string text, string[] asciiArtAlphabet)
             {
-                var caractersAsciis = new List<CaracterAsciiArt>();
+                var caractersAsciis = new List<AsciiArtCaracter>();
                 var rowIndex = 0;
                 for (var caracterIndex = 0; caracterIndex < Caracters.Length; caracterIndex++)
                 {
@@ -90,24 +90,24 @@
                         lines.Add(line);
                     }
 
-                    caractersAsciis.Add(new CaracterAsciiArt(caracter, lines.ToArray()));
+                    caractersAsciis.Add(new AsciiArtCaracter(caracter, lines.ToArray()));
                     lines.Clear();
                     rowIndex += width;
                 }
 
-                return new AsciiAlphabet(caractersAsciis);
+                return new AsciiArtAlphabet(caractersAsciis);
             }
         }
 
-        public class CaracterAsciiArt
+        private class AsciiArtCaracter
         {
             private readonly string _caracter;
-            private readonly string[] _caracterLines;
+            private readonly string[] _asciiArtLines;
 
-            public CaracterAsciiArt(string caracter, string[] caracterLines)
+            public AsciiArtCaracter(string caracter, string[] asciiArtLines)
             {
                 _caracter = caracter;
-                _caracterLines = caracterLines;
+                _asciiArtLines = asciiArtLines;
             }
 
             public bool Is(string caracter)
@@ -115,9 +115,9 @@
                 return string.Equals(_caracter, caracter, StringComparison.OrdinalIgnoreCase);
             }
 
-            public string GetLine(int height)
+            public string GetAsciiArtLine(int height)
             {
-                return _caracterLines[height];
+                return _asciiArtLines[height];
             }
         }
     }
