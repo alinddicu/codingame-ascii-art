@@ -67,7 +67,7 @@
             private readonly IEnumerable<AsciiArtCaracter> _caractersAsciis;
             private readonly AsciiArtCaracter _questionMarkAsciiArt;
 
-            public AsciiArtAlphabet(IEnumerable<AsciiArtCaracter> caractersAsciis)
+            protected AsciiArtAlphabet(IEnumerable<AsciiArtCaracter> caractersAsciis)
             {
                 _caractersAsciis = caractersAsciis;
                 _questionMarkAsciiArt = Translate(QuestionMark);
