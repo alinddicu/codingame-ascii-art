@@ -84,7 +84,7 @@
                 return _questionMarkAsciiArt;
             }
 
-            public static AsciiArtAlphabet Init(int width, int height, string text, string[] asciiArtAlphabet)
+            public static AsciiArtAlphabet Init(int asciiArtCharWidth, int asciiArtCharHeight, string textToConvert, string[] asciiArtInlineAlphabet)
             {
                 var caractersAsciis = new List<AsciiArtCaracter>();
                 var rowIndex = 0;
@@ -92,15 +92,15 @@
                 {
                     var caracter = Caracters[caracterIndex];
                     var lines = new List<string>();
-                    for (var heightIndex = 0; heightIndex < height; heightIndex++)
+                    for (var heightIndex = 0; heightIndex < asciiArtCharHeight; heightIndex++)
                     {
-                        var line = asciiArtAlphabet[heightIndex].Substring(rowIndex, width);
+                        var line = asciiArtInlineAlphabet[heightIndex].Substring(rowIndex, asciiArtCharWidth);
                         lines.Add(line);
                     }
 
                     caractersAsciis.Add(new AsciiArtCaracter(caracter, lines.ToArray()));
                     lines.Clear();
-                    rowIndex += width;
+                    rowIndex += asciiArtCharWidth;
                 }
 
                 return new AsciiArtAlphabet(caractersAsciis);
